@@ -5,7 +5,7 @@ import java.net.URISyntaxException;
 
 public class Bomb
 {
-    public static final int NUMBER_OF_PLANNED_REQUESTS = 10000;
+    public static final int NUMBER_OF_PLANNED_REQUESTS = 1000;
 
 
 

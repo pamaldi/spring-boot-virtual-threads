@@ -19,7 +19,7 @@ public class BombLogReader implements Runnable
         {
             try
             {
-                Thread.sleep(200);
+                Thread.sleep(1000);
                 bombLogInfo = bombLog.getBombLogInfo();
                 System.out.println("Number of requests: " + bombLogInfo.numberOfRequests());
             } catch (InterruptedException e)
@@ -30,6 +30,8 @@ public class BombLogReader implements Runnable
         System.out.println("Elapsed time: " + (System.currentTimeMillis()-startTime) + " ms");
         bombLogInfo = bombLog.getBombLogInfo();
         System.out.println("Number of requests per seconds: " + bombLogInfo.numberOfRequests()/((System.currentTimeMillis()-startTime)/1000));
+        System.out.println("Number of ko requests : " + bombLogInfo.numberOfKoRequests());
+        System.out.println("Number of ko requests per seconds: " + bombLogInfo.numberOfKoRequests()/((System.currentTimeMillis()-startTime)/1000));
 
 
     }

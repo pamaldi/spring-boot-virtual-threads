@@ -23,22 +23,15 @@ public class RequestTimeOutClient
     public void performRequest()
     {
         //System.out.println("Thread " + Thread.currentThread() + " started");
-        RandomGenerator generator = RandomGenerator.getDefault();
-        int random = generator.nextInt(10, 100);
-        try
-        {
-            Thread.sleep(random*100);
-        } catch (InterruptedException e)
-        {
-            throw new RuntimeException(e);
-        }
+
         String uri = "http://localhost:8080/virtual-threads/long-way-run";
         HttpRequest request = null;
+        HttpResponse<String> response = null;
         try
         {
             request = HttpRequest.newBuilder()
                     .uri(new URI(uri))
-                    .timeout(Duration.of(5, SECONDS))
+                    .timeout(Duration.of(60, SECONDS))
                     .GET()
                     .build();
         } catch (URISyntaxException e)
@@ -47,16 +40,17 @@ public class RequestTimeOutClient
         }
         try
         {
-            HttpResponse<String> response = HttpClient
+             response = HttpClient
                     .newBuilder()
                     .build()
                     .send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e)
         {
-
+            this.bombLog.incNumberOfKoRequest();
         }finally
         {
-            //System.out.println("Thread " + Thread.currentThread() + " finished");
+            String responseString = response == null ? "null" : response.body();
+            //System.out.println("Thread " + Thread.currentThread() + " finished with response "+responseString);
             this.bombLog.incNumberOfRequest();
         }
     }
